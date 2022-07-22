@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'gr.aueb.android.barista-plugin'
+
 
 android {
     compileSdkVersion 29
@@ -23,6 +25,7 @@ android {
             applicationIdSuffix ".debug"
             versionNameSuffix "-DEBUG"
             resValue "string", "debug_title", "DEBUG-" + getDate()
+            testCoverageEnabled true
         }
     }
     lintOptions {
@@ -52,4 +55,28 @@ def getDate() {
     def date = new Date()
     def formattedDate = date.format('yyyyMMdd-HH:mm')
     return formattedDate
+}
+
+task jacocoTestReport(type: JacocoReport) {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*',
+                      '**/data/models/*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    getSourceDirectories().setFrom(files([mainSrc]))
+    getClassDirectories().setFrom(files([debugTree]))
+    getExecutionData().setFrom(fileTree(dir: "$project.rootDir", includes: [
+            "coverage.exec"
+    ]))
+     
 }
