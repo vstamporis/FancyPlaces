@@ -1,4 +1,4 @@
- ./gradlew clean startMonkeyDebug --events="1000" --throttle="200" --epochs="30" --config="configs/fuzzer1.properties" jacocoTestReport --stacktrace
+ ./gradlew clean startMonkeyDebug --events="1000" --throttle="200" --epochs="3" --config="configs/fuzzer1.properties" jacocoTestReport --stacktrace
 
-./gradlew clean startBaristaFuzzer --events="2500" --throttle="200" --epochs="3" --config="configs/fuzzer1.properties" jacocoTestReport --stacktrace
+./gradlew clean startBaristaFuzzer --events="1000" --throttle="200" --epochs="3" --config="configs/fuzzer1.properties" jacocoTestReport --stacktrace
 C:\Users\bzafiris\AppData\Local\Android\Sdk\emulator\emulator.exe @Pixel_2_XL_API_27 -wipe-data

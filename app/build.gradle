@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'gr.aueb.android.barista-plugin'
-
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 29
@@ -22,7 +22,7 @@ android {
 
         }
         debug {
-            applicationIdSuffix ".debug"
+            //applicationIdSuffix ".debug"
             versionNameSuffix "-DEBUG"
             resValue "string", "debug_title", "DEBUG-" + getDate()
             testCoverageEnabled true

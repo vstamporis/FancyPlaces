@@ -82,4 +82,5 @@ public class FancyPlacesApplication extends Application {
         }
         return result;
     }
+
 }

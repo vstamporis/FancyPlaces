@@ -40,6 +40,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gabm.fancyplaces.BuildConfig;
 import com.gabm.fancyplaces.FancyPlacesApplication;
 import com.gabm.fancyplaces.R;
 import com.gabm.fancyplaces.data.FancyPlace;
@@ -58,6 +59,7 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -392,6 +394,19 @@ public class MainWindow extends AppCompatActivity implements OnFancyPlaceSelecte
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
         bundle.putParcelable("state", curState);
+    }
+
+    protected void onStop() {
+        super.onStop();
+
+        if (BuildConfig.DEBUG) {
+            try {
+                Class<?> emmaRTClass = Class.forName("com.vladium.emma.rt.RT");
+                Method dumpCoverageMethod = emmaRTClass.getMethod("dumpCoverageData", File.class, boolean.class, boolean.class);
+                dumpCoverageMethod.invoke(null, new File("sdcard/coverage.exec"), false, false);
+            } catch (Exception e) {}
+        }
+
     }
 
     @Override
